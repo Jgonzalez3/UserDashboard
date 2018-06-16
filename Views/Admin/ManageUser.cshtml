@@ -1,0 +1,72 @@
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand">UserDashboard</span>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a asp-area="" asp-controller="Admin" asp-action="ManageUsers">Dashboard</a></li>
+                <li><a asp-area="" asp-controller="Normal" asp-action="EditUser">Profile</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li><a>Welcome @ViewBag.UserName!</a></li>
+                <li><a href="/">Logoff</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-sm-6 col-md-6">
+        <h2>Manage Users</h2>
+    </div>
+    <div class="col-xs-2 col-sm-6 col-md-5">
+        <br>
+        <a class="btn btn-primary pull-right" role="button" href="/user/add">Add New</a>
+    </div>
+</div>
+<br>
+<table class="table table-striped table-bordered">
+    <thead>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Created</th>
+        <th>User Level</th>
+        <th>Actions</th>
+    </thead>
+    <tbody>
+        @foreach(var user in @ViewBag.Allusers)
+        {
+        <tr>    
+            <td>@user.UserId</td>
+            <td><a href="/users/show/@user.UserId">@user.firstname @user.lastname</a></td>
+            <td>@user.email</td>
+            <td>@user.created_at.ToString("MMM d yyyy")</td>
+            @if(@user.level == 9)
+            {
+                <td>Admin</td>
+            }
+            else
+            {
+                <td>Normal</td>
+            }
+            <td class="col-sm-3 col-md-3"><form action="/users/adminedit" method="POST">
+                <input type="hidden" name="user_id" value=@user.UserId>
+                <button class="btn btn-link pull-left" type="submit">edit</button>
+            </form>  
+            <form action="/deleteuser" method="POST">
+                <input type="hidden" name="user_id" value=@user.UserId>
+                <button class="btn btn-link pull-right" type="submit">remove</button>
+            </form></td>
+        </tr>
+        }
+    </tbody>
+</table>

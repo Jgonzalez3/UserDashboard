@@ -1,0 +1,126 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <span class="navbar-brand">UserDashboard</span>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if(@ViewBag.User.level == 9)
+                {
+                    <li><a asp-area="" asp-controller="Admin" asp-action="ManageUsers">Dashboard</a></li>
+                }
+                else if(@ViewBag.User.level == 1)
+                {
+                    <li><a asp-area="" asp-controller="Normal" asp-action="AllUsers">Dashboard</a></li>
+                }
+                <li><a asp-area="" asp-controller="Normal" asp-action="EditUser">Profile</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li><a>Welcome @ViewBag.User.firstname!</a></li>
+                <li><a href="/">Logoff</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<h2>@ViewBag.Profile.firstname @ViewBag.Profile.lastname</h2>
+<div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-2">
+        <h4>Registed at: </h4>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-3">
+        <h4>@ViewBag.Profile.created_at.ToString("MMMM d yyyy")</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-2">
+        <h4>User ID: </h4>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-3">
+        <h4>@ViewBag.Profile.UserId</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-2">
+        <h4>Email address: </h4>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-3">
+        <h4>@ViewBag.Profile.email</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-4 col-sm-3 col-md-2">
+        <h4>Description:</h4>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-3">
+        <h4>@ViewBag.Profile.description</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-10 col-md-10">
+        <h3>Leave a message for @ViewBag.Profile.firstname</h3>
+        <form action="users/show/postmessage" method="POST">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <textarea class="col-xs-12 col-sm-12 col-md-12" name="message"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <button class="btn btn-primary pull-right" type="submit">Post</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<br>
+<!-- Razor for posts to this user -->
+<div class="row">
+    <div class="col-xs-8 col-sm-7 col-md-8">
+        <h5>Henry wrote</h5>
+    </div>
+    <div class="col-xs-4 col-sm-3 col-md-2">
+        <h5 class="pull-right">Date created</h5>
+    </div>
+    <div class="col-sm-10 col-md-10">
+        <div class="row">
+            <div class="col-sm-12 col-md-12">
+                <textarea class="col-xs-12 col-sm-12 col-md-12"> insert post</textarea>
+            </div>
+        </div>
+        <br>
+    </div>
+</div>
+<!-- Razore for comments to the post above -->
+
+
+<div class="row">
+    <div class="col-sm-10 col-md-10">
+        <div class="row">
+            <div class="col-xs-11 col-sm-10 col-md-10 pull-right">
+                <div class="col-xs-7 col-sm-7 col-md-8">
+                    <h5>Henry wrote</h5>
+                </div>
+                <div class="col-xs-5 col-sm-5 col-md-4">
+                    <h5 class="pull-right">Date created</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-10 col-md-10">
+        <div class="row">
+        <form action="users/show/postcomment" method="POST">
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <textarea class="col-xs-11 col-sm-10 col-md-10 pull-right"> insert comment</textarea>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-xs-10 col-sm-10 col-md-10 pull-right">
+                <button class="btn btn-success pull-right" type="submit">Post</button>
+            </div>
+        </div>
+        </form>
+        <br>
+    </div>
+</div>

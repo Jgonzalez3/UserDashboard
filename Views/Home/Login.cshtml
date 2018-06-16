@@ -1,0 +1,44 @@
+﻿<div class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="item active">
+            <img class="bimg" src="/images/LoginReg_Entrance.jpg" style="height: 100%">
+        </div>
+        <div class="item">
+            <img class="bimg" src="/images/LoginReg_Alphabet.jpg" style="height: 100%">
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <span class="navbar-brand">UserDashboard</span>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a asp-area="" asp-controller="Home" asp-action="Register">Register</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container content">
+    <div class="row">
+        <div class="col">
+            <h1>Sign In</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8 col-sm-6 col-md-4">
+            <form action="login" method="POST">
+                <h3>Email Address:</h3>
+                <p class="text-danger">@TempData["Invalidemail"]</p>
+                <input class="form-control" type="email" name="loginemail">
+                <h3>Password:</h3>
+                <p class="text-danger">@TempData["InvalidPW"]</p>
+                <input class="form-control" type="password" name="loginpassword"><br>
+                <button class="btn btn-success pull-right" type="submit">Sign In</button><br><br>
+                <p class="text-center"><br><a class="font-weight-bold" href="/register">Don't have an account? Register.</a></p>
+            </form>
+        </div>
+    </div>
+</div>

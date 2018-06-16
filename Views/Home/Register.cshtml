@@ -1,0 +1,56 @@
+﻿@model UserDashboard.Models.RegisterViewModel
+<div class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="item active">
+            <img class="bimg" src="/images/LoginReg_Entrance.jpg" style="height: 100%">
+        </div>
+        <div class="item">
+            <img class="bimg" src="/images/LoginReg_Alphabet.jpg" style="height: 100%">
+        </div>
+    </div>
+</div>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <span class="navbar-brand">UserDashboard</span>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a asp-area="" asp-controller="Home" asp-action="Register">Register</a></li>
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container content">
+    <div class="row">
+        <div class="col">
+            <h1>Register</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8 col-sm-6 col-md-4">
+            <form asp-controller="Home" asp-action="registeruser" method="POST">
+                <h3>Email Address:</h3>
+                <p class="text-danger"><span  asp-validation-for="email"></span>@TempData["Emailused"]</p>
+                <input class="form-control" type="email" name="email">
+                <h3>First Name:</h3>
+                <p><span class="text-danger" asp-validation-for="firstname"></span></p>
+                <input class="form-control" type="text" name="firstname">
+                <h3>Last Name:</h3>
+                <p><span class="text-danger" asp-validation-for="lastname"></span></p>
+                <input class="form-control" type="text" name="lastname">
+                <h3>Password:</h3>
+                <p><span class="text-danger" asp-validation-for="password"></span></p>
+                <input class="form-control" type="password" name="password">
+                <h3>Password Confirmation:</h3>
+                <p><span class="text-danger" asp-validation-for="passwordconfirm"></span></p>
+                <input class="form-control" type="password" name="passwordconfirm">
+                <br>
+                <button class="btn btn-success pull-right" type="submit">Register</button>
+            </form>
+            <br><br>
+            <p><a class="font-weight-bold" href="/">Already have an account? Login</a></p>
+        </div>
+    </div>
+</div>

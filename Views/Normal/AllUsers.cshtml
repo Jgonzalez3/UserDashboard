@@ -1,0 +1,57 @@
+﻿
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <span class="navbar-brand">UserDashboard</span>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a asp-area="" asp-controller="Normal" asp-action="AllUsers">Dashboard</a></li>
+                <li><a asp-area="" asp-controller="Normal" asp-action="EditUser">Profile</a></li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li><a>Welcome @ViewBag.UserName!</a></li>
+                <li><a href="/">Logoff</a></li>
+            </ul>
+        </div>
+            
+    </div>
+</nav>
+<div class="row">
+    <div class="col">
+        <h1>Manage Users</h1>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-stripped">
+        <thead>
+            <th>ID</th>
+            <th>Name*</th>
+            <th>Email</th>
+            <th>Created On</th>
+            <th>User Level</th>
+        </thead>
+        <tbody>
+        @if(var user in @ViewBag.AllUsers)
+        {
+            <tr>
+                <td>@user.UserId</td>
+                <td><form action="/users/show/@user.UserId">
+                    <input type="hidden" name="user_id" value=@user.UserId>
+                    <button class="btn btn-link">@user.firstname @user.lastname</button>
+                </form></td>
+                <td>@user.email</td>
+                <td>@user.created_at.ToString("MMM d yyyy")</td>
+                if(@user.level == 9)
+                {
+                    <td>Admin</td>
+                }
+                else
+                {
+                    <td>Normal</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
