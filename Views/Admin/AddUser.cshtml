@@ -2,49 +2,58 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#sectors">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <span class="navbar-brand">UserDashboard</span>
         </div>
-        <div class="navbar-collapse collapse">
+        <div id="sectors" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a asp-area="" asp-controller="Admin" asp-action="ManageUsers">Dashboard</a></li>
                 <li><a asp-area="" asp-controller="Normal" asp-action="EditUser">Profile</a></li>
             </ul>
-            <ul class="nav navbar-nav pull-right">
+            <ul class="nav navbar-nav pull-right" style="display: inline-block">
                 <li><a>Welcome @ViewBag.UserName!</a></li>
                 <li><a href="/">Logoff</a></li>
             </ul>
         </div>
     </div>
 </nav>
-<div class="row">
-    <div class="col-xs-8 col-sm-6 col-md-6">
-        <h2>Add a New User</h2>
-    </div>
-    <div class="col-xs-4 col-sm-6 col-md-5">
-        <br>
-        <a class="btn btn-primary pull-right" href="/dashboard/admin">Return to Dashboard</a>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-8 col-sm-6 col-md-4">
-        <form asp-controller="Admin" asp-action="/adduser" method="POST">
-            <h3>Email Address:</h3>
-            <p><span class="text-danger" asp-validation-for="email"></span>@TempData["Emailused"]</p>
-            <input class="form-control" type="email" name="email">
-            <h3>First Name:</h3>
-            <p><span class="text-danger" asp-validation-for="firstname"></span></p>
-            <input class="form-control" type="text" name="firstname">
-            <h3>Last Name:</h3>
-            <p><span class="text-danger" asp-validation-for="lastname"></span></p>
-            <input class="form-control" type="text" name="lastname">
-            <h3>Password:</h3>
-            <p><span class="text-danger" asp-validation-for="password"></span></p>
-            <input class="form-control" type="password" name="password">
-            <h3>Password Confirmation:</h3>
-            <p><span class="text-danger" asp-validation-for="passwordconfirm"></span></p>
-            <input class="form-control" type="password" name="passwordconfirm">
+<div class="container">
+    <div class="row">
+        <div class="col-xs-8 col-sm-6 col-md-6">
+            <h2>Add a New User</h2>
+        </div>
+        <div class="col-xs-4 col-sm-6 col-md-5">
             <br>
-            <button class="btn btn-success pull-right" type="submit">Create</button>
-        </form>
+            <a class="btn btn-primary pull-right" href="/dashboard/admin">Return to Dashboard</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-8 col-sm-6 col-md-4">
+            <form asp-controller="Admin" asp-action="adduser" method="POST">
+                <h3>Email Address:</h3>
+                <p class="text-danger"><span asp-validation-for="email"></span>@TempData["Emailused"]</p>
+                <input class="form-control" type="email" name="email">
+                <h3>First Name:</h3>
+                <p><span class="text-danger" asp-validation-for="firstname"></span></p>
+                <input class="form-control" type="text" name="firstname">
+                <h3>Last Name:</h3>
+                <p><span class="text-danger" asp-validation-for="lastname"></span></p>
+                <input class="form-control" type="text" name="lastname">
+                <h3>Password:</h3>
+                <p><span class="text-danger" asp-validation-for="password"></span></p>
+                <input class="form-control" type="password" name="password">
+                <h3>Password Confirmation:</h3>
+                <p><span class="text-danger" asp-validation-for="passwordconfirm"></span></p>
+                <input class="form-control" type="password" name="passwordconfirm">
+                <br>
+                <button class="btn btn-success pull-right" type="submit">Create</button>
+            </form>
+        </div>
     </div>
 </div>
+

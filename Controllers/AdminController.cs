@@ -50,11 +50,12 @@ namespace UserDashboard.Controllers{
         [HttpPost]
         [Route("/adduser")]
         public IActionResult AddUser(RegisterViewModel model, User NewUser){
+            System.Console.WriteLine("New User",NewUser);
             if(ModelState.IsValid){
                 List<User> Allusers = _context.Users.Where(User=>User.email == model.email).ToList();
                 if(Allusers.Count>0){
                     TempData["Emailused"] = "This email has already been registered. Register with a new email.";
-                    return RedirectToAction("AdminAddUser");
+                    return View("AddUser");
                 }
                 NewUser.level = 1;
                 PasswordHasher<User> Hasher = new PasswordHasher<User>();
@@ -66,7 +67,7 @@ namespace UserDashboard.Controllers{
             int? UserId = HttpContext.Session.GetInt32("userid");
             User Adminuser = _context.Users.SingleOrDefault(User=>User.UserId == UserId);
             ViewBag.UserName = Adminuser.firstname;
-            return RedirectToAction("AdminAddUser");
+            return View("AddUser");
         }
         [HttpPost]
         [Route("/deleteuser")]
@@ -79,6 +80,7 @@ namespace UserDashboard.Controllers{
         [HttpGet]
         [Route("/users/edit/{user_id}")]
         public IActionResult AdminEditUser(int user_id){
+            System.Console.WriteLine(user_id);
             int? UserId = HttpContext.Session.GetInt32("userid");
             if(UserId == null){
                 return RedirectToAction("Index", "Home");
@@ -97,9 +99,8 @@ namespace UserDashboard.Controllers{
         public IActionResult EditUserLink(int user_id){
             return RedirectToAction("AdminEditUser", new{user_id=user_id});
         }
-        // fix the validation below for redirects and render view
         [HttpPost]
-        [Route("/admin_editinfo")]
+        [Route("/admin/editinfo")]
         public IActionResult EditUserInfo(UpdateViewModel model, int level){
             int? AdminEdit = HttpContext.Session.GetInt32("profileid");
             if(ModelState.IsValid){
@@ -110,9 +111,11 @@ namespace UserDashboard.Controllers{
                 int currentlevel = EditUser.level;
                 if(currentfirstname != model.firstname){
                     TempData["firstname"] = $"First Name updated successfully {model.firstname}";
+                    EditUser.firstname = model.firstname;
                 }
-                if(currentfirstname != model.firstname){
+                if(currentlastname != model.lastname){
                     TempData["lastname"] = $"Last Name updated successfully {model.lastname}";
+                    EditUser.lastname = model.lastname;
                 }
                 if(currentemail != model.email){
                     List<User> Checkemail = _context.Users.Where(x=>x.email == model.email).ToList();
@@ -121,34 +124,41 @@ namespace UserDashboard.Controllers{
                         return RedirectToAction("AdminEditUser", new{user_id=EditUser});
                     }
                     TempData["email"] = $"Email updated successfully to '{model.email}' ";
+                    EditUser.email = model.email;
                 }
                 if(currentlevel != level){
                     if(level == 9){
                         TempData["level"] = "Level updated to Admin";
+                        EditUser.level = level;
                     }
-                    TempData["level"] = "Level updated to Normal";
+                    else{
+                        TempData["level"] = "Level updated to Normal";
+                        EditUser.level = level;
+                    }
                 }
                 _context.SaveChanges();
                 return RedirectToAction("AdminEditUser", new{user_id=AdminEdit});
             }
-            return RedirectToAction("AdminEditUser", new{user_id = AdminEdit});
+            ViewBag.Userinfo = _context.Users.SingleOrDefault(x=>x.UserId == AdminEdit);
+            return View("AdminEditUser");
         }
         [HttpPost]
         [Route("/admin_updateuserpw")]
-        public IActionResult UpdateUserPassword(string password){
+        public IActionResult UpdateUserPassword(string password, string passwordconfirm){
             int? AdminEdit = HttpContext.Session.GetInt32("profileid");
             if(password == null || password.Length < 8){
                 TempData["invalidPW"]="Password required and must be at least 8 characters";
                 return RedirectToAction("AdminEditUser", new{user_id=AdminEdit});
             }
-            if(ModelState.IsValid){
+            if(password == passwordconfirm){
                 User userprofile = _context.Users.SingleOrDefault(User=> User.UserId == AdminEdit);
                 PasswordHasher<User> Hasher = new PasswordHasher<User>();
-                userprofile.password = Hasher.HashPassword(userprofile, userprofile.password);
+                userprofile.password = Hasher.HashPassword(userprofile, password);
                 TempData["PWupdate"] = "Password updated successfully";
                 _context.SaveChanges();
                 return RedirectToAction("AdminEditUser", new{user_id=AdminEdit});
             }
+            TempData["pwMismatch"] = "Passwords Do Not Match Try Again";
             return RedirectToAction("AdminEditUser", new{user_id=AdminEdit});
         }
     }

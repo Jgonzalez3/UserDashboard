@@ -58,13 +58,13 @@
             {
                 <td>Normal</td>
             }
-            <td class="col-sm-3 col-md-3"><form action="/users/adminedit" method="POST">
+            <td class="col-sm-4 col-md-3"><form action="/users/adminedit" method="POST">
                 <input type="hidden" name="user_id" value=@user.UserId>
-                <button class="btn btn-link pull-left" type="submit">edit</button>
+                <button class="col-xs-12 col-sm-5 btn btn-info pull-left" type="submit">edit</button>
             </form>  
             <form action="/deleteuser" method="POST">
                 <input type="hidden" name="user_id" value=@user.UserId>
-                <button class="btn btn-link pull-right" type="submit">remove</button>
+                <button class="col-xs-12 col-sm-5 btn btn-danger pull-right" type="submit">remove</button>
             </form></td>
         </tr>
         }
