@@ -105,28 +105,24 @@ namespace UserDashboard.Controllers{
             int? AdminEdit = HttpContext.Session.GetInt32("profileid");
             if(ModelState.IsValid){
                 User EditUser = _context.Users.SingleOrDefault(x=>x.UserId == AdminEdit);
-                string currentfirstname = EditUser.firstname;
-                string currentlastname = EditUser.lastname;
-                string currentemail = EditUser.email;
-                int currentlevel = EditUser.level;
-                if(currentfirstname != model.firstname){
-                    TempData["firstname"] = $"First Name updated successfully {model.firstname}";
-                    EditUser.firstname = model.firstname;
-                }
-                if(currentlastname != model.lastname){
-                    TempData["lastname"] = $"Last Name updated successfully {model.lastname}";
-                    EditUser.lastname = model.lastname;
-                }
-                if(currentemail != model.email){
+                if(EditUser.email != model.email){
                     List<User> Checkemail = _context.Users.Where(x=>x.email == model.email).ToList();
                     if(Checkemail.Count>0){
                         TempData["invalidemail"] = "Email entered is already in use. Please enter another or leave unchanged.";
                         return RedirectToAction("AdminEditUser", new{user_id=EditUser});
                     }
-                    TempData["email"] = $"Email updated successfully to '{model.email}' ";
+                    TempData["email"] = $"Email updated successfully from '{EditUser.email}' ";
                     EditUser.email = model.email;
                 }
-                if(currentlevel != level){
+                if(EditUser.firstname != model.firstname){
+                    TempData["firstname"] = $"First Name updated successfully from {EditUser.firstname}";
+                    EditUser.firstname = model.firstname;
+                }
+                if(EditUser.lastname != model.lastname){
+                    TempData["lastname"] = $"Last Name updated successfully from {EditUser.lastname}";
+                    EditUser.lastname = model.lastname;
+                }
+                if(EditUser.level != level){
                     if(level == 9){
                         TempData["level"] = "Level updated to Admin";
                         EditUser.level = level;

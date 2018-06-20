@@ -28,6 +28,8 @@ namespace UserDashboard.Controllers{
             HttpContext.Session.SetInt32("profileid", user_id);
             int? WallId = HttpContext.Session.GetInt32("profileid");
             // May need better query to display all comments, messages, and posts to this user.
+            ViewBag.Messages = _context.Messages.Include(User=>User.MessageSent).Where(x=>x.MessageReceivedId == WallId);
+            ViewBag.Comments = _context.Comments.Include(User=>User.User).Include(Message=>Message.Message);
             User Profile = _context.Users.SingleOrDefault(User=>User.UserId == WallId);
             ViewBag.Profile = Profile;
             return View("Wall");
@@ -35,13 +37,28 @@ namespace UserDashboard.Controllers{
         [HttpPost]
         [Route("users/show/postmessage")]
         public IActionResult PostMessage(Message NewMessage){
+            // System.Console.WriteLine("NEW MESSAGE", message);
+            // System.Console.WriteLine(message);
+            // NewMessage.message = message;
             int? WallId = HttpContext.Session.GetInt32("profileid");
+            int? SenderId = HttpContext.Session.GetInt32("userid");
+            NewMessage.MessageReceivedId = (int)WallId;
+            NewMessage.MessageSentId = (int)SenderId;
+            System.Console.WriteLine("NEW MESSAGE");
+            System.Console.WriteLine(NewMessage.message);
+            _context.Messages.Add(NewMessage);
+            _context.SaveChanges();
             return RedirectToAction("DisplayWall", new{user_id=WallId});
         }
         [HttpPost]
-        [Route("/users/show/postcomment")]
+        [Route("users/show/postcomment")]
         public IActionResult PostComment(Comment NewComment){
+            System.Console.WriteLine(NewComment);
             int? WallId = HttpContext.Session.GetInt32("profileid");
+            int? SenderId = HttpContext.Session.GetInt32("userid");
+            NewComment.UserId = (int)SenderId;
+            _context.Comments.Add(NewComment);
+            _context.SaveChanges();
             return RedirectToAction("DisplayWall", new{user_id=WallId});
         }
     }

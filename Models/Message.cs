@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserDashboard.Models{
     public class Message{
@@ -22,14 +23,17 @@ namespace UserDashboard.Models{
                 double days =DateTime.Now.Subtract(this.created_at).TotalDays;
                 double hours =DateTime.Now.Subtract(this.created_at).TotalHours;
                 double minutes = DateTime.Now.Subtract(this.created_at).TotalMinutes;
+                if((int)days > 27){
+                    return $"{this.created_at.ToString("MMM d yyyy")}";
+                }
                 if((int)hours > 24){
-                    return $"{(int)days}";
+                    return $"{(int)days} days ago";
                 }
                 else if((int)minutes > 60){
-                    return $"{(int)hours}";
+                    return $"{(int)hours} hours ago";
                 }
                 else{
-                    return $"{(int)minutes}";
+                    return $"{(int)minutes} minutes ago";
                 }
             }
         }

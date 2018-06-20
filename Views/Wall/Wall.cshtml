@@ -1,6 +1,13 @@
+@model UserDashboard.Models.Message
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
             <span class="navbar-brand">UserDashboard</span>
         </div>
         <div class="navbar-collapse collapse">
@@ -22,105 +29,124 @@
         </div>
     </div>
 </nav>
-<h2>@ViewBag.Profile.firstname @ViewBag.Profile.lastname</h2>
-<div class="row">
-    <div class="col-xs-4 col-sm-3 col-md-2">
-        <h4>Registed at: </h4>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
-        <h4>@ViewBag.Profile.created_at.ToString("MMMM d yyyy")</h4>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-4 col-sm-3 col-md-2">
-        <h4>User ID: </h4>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
-        <h4>@ViewBag.Profile.UserId</h4>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-4 col-sm-3 col-md-2">
-        <h4>Email address: </h4>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
-        <h4>@ViewBag.Profile.email</h4>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-4 col-sm-3 col-md-2">
-        <h4>Description:</h4>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3">
-        <h4>@ViewBag.Profile.description</h4>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-10 col-md-10">
-        <h3>Leave a message for @ViewBag.Profile.firstname</h3>
-        <form action="users/show/postmessage" method="POST">
-        <div class="row">
-            <div class="col-sm-12 col-md-12">
-                <textarea class="col-xs-12 col-sm-12 col-md-12" name="message"></textarea>
-            </div>
+<div class="container">
+    <h2>@ViewBag.Profile.firstname @ViewBag.Profile.lastname</h2>
+    <div class="row">
+        <div class="col-xs-5 col-sm-3 col-md-2">
+            <h4><u>Registed at:</u> </h4>
         </div>
-        <br>
-        <div class="row">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <button class="btn btn-primary pull-right" type="submit">Post</button>
-            </div>
+        <div class="col-xs-6 col-sm-4 col-md-3">
+            <h4>@ViewBag.Profile.created_at.ToString("MMMM d yyyy")</h4>
         </div>
-        </form>
     </div>
-</div>
-<br>
-<!-- Razor for posts to this user -->
-<div class="row">
-    <div class="col-xs-8 col-sm-7 col-md-8">
-        <h5>Henry wrote</h5>
-    </div>
-    <div class="col-xs-4 col-sm-3 col-md-2">
-        <h5 class="pull-right">Date created</h5>
-    </div>
-    <div class="col-sm-10 col-md-10">
-        <div class="row">
-            <div class="col-sm-12 col-md-12">
-                <textarea class="col-xs-12 col-sm-12 col-md-12"> insert post</textarea>
-            </div>
+    <div class="row">
+        <div class="col-xs-5 col-sm-3 col-md-2">
+            <h4><u>User ID: </u></h4>
         </div>
-        <br>
+        <div class="col-xs-6 col-sm-4 col-md-3">
+            <h4>@ViewBag.Profile.UserId</h4>
+        </div>
     </div>
-</div>
-<!-- Razore for comments to the post above -->
-
-
-<div class="row">
-    <div class="col-sm-10 col-md-10">
-        <div class="row">
-            <div class="col-xs-11 col-sm-10 col-md-10 pull-right">
-                <div class="col-xs-7 col-sm-7 col-md-8">
-                    <h5>Henry wrote</h5>
-                </div>
-                <div class="col-xs-5 col-sm-5 col-md-4">
-                    <h5 class="pull-right">Date created</h5>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <h4><u>Email address:</u> </h4>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-3">
+            <h4>@ViewBag.Profile.email</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-2">
+            <h4><u>Description:</u></h4>
+        </div>
+        <div class="col-xs-12 col-sm-7 col-md-6">
+            <h4>@ViewBag.Profile.description</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10 col-md-10">
+            <h3>Leave a message for @ViewBag.Profile.firstname</h3>
+            <form action="/users/show/postmessage" method="POST">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <textarea class="form-control col-xs-12 col-sm-12 col-md-12" name="message"></textarea>
+                    <br><br><br>
+                    <button class="btn btn-primary pull-right" type="submit">Post</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
-    <div class="col-sm-10 col-md-10">
-        <div class="row">
-        <form action="users/show/postcomment" method="POST">
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <textarea class="col-xs-11 col-sm-10 col-md-10 pull-right"> insert comment</textarea>
+    <br>
+    <!-- Razor for posts to this user -->
+
+    @foreach(var message in @ViewBag.Messages)
+    {
+    <div class="row">
+        <div class="col-xs-6 col-sm-7 col-md-8">
+            @if(@message.MessageSent.firstname == @ViewBag.User.firstname){
+                <h5 class="text-success">You wrote:</h5>
+            }
+            else{
+                <h5><a href="/users/show/@message.MessageSent.UserId">@message.MessageSent.firstname</a> wrote:</h5>
+            }
+        </div>
+        <div class="col-xs-6 col-sm-3 col-md-2">
+            <h5 class="pull-right">@message.duration</h5>
+        </div>
+        <div class="col-sm-10 col-md-10">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+                    <textarea class="form-control col-xs-12 col-sm-12 col-md-12" readonly="readonly">@message.message</textarea>
+                </div>
+            </div>
+        <br>
+        </div>
+    </div>
+    @foreach(var comment in @ViewBag.Comments)
+    {
+    @if(@comment.MessageId == @message.MessageId)
+    {
+    <div class="row">
+        <div class="col-sm-10 col-md-10">
+            <div class="row">
+                <div class="col-xs-11 col-sm-10 col-md-10 pull-right">
+                    <div class="col-xs-6 col-sm-7 col-md-8">
+                        @if(@comment.User.firstname == @ViewBag.User.firstname)
+                        {
+                        <h5 class="text-success">You wrote:</h5>
+                        }
+                        else{
+                            <h5><a href="/users/show/@comment.User.UserId">@comment.User.firstname</a> wrote:</h5>
+                        }
+                    </div>
+                    <div class="col-xs-6 col-sm-5 col-md-4">
+                        <h5 class="pull-right">@comment.duration</h5>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <textarea class="form-control pull-right" readonly="readonly">@comment.comment</textarea>
+                    </div>
+                </div>
             </div>
         </div>
-        <br>
+    </div>
+    }
+    }
+    <br>
+    <div class="row">
+        <div class="col-sm-10 col-md-10">
         <div class="row">
-            <div class="col-xs-10 col-sm-10 col-md-10 pull-right">
+        <form class="col-xs-11 col-sm-10 col-md-10 pull-right" action="/users/show/postcomment" method="POST">
+            <div class="col-sm-12 col-md-12">
+                <input type="hidden" name="MessageId" value=@message.MessageId>
+                <textarea name="comment" class="form-control pull-right"></textarea>
+                <br><br><br>
                 <button class="btn btn-success pull-right" type="submit">Post</button>
             </div>
-        </div>
         </form>
+        </div>
         <br>
+        </div>
     </div>
+    }
 </div>

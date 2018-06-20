@@ -37,7 +37,7 @@
             <div class="col border">
                 <h4>Edit Your Information</h4>
                 <div class="row">
-                    <form action="/editinfo">
+                    <form action="/editinfo" method="POST">
                     <div class="col">
                         <h5>Email Address:</h5>
                         <p class="text-danger"><span asp-validation-for="email"></span>@TempData["invalidemail"]</p>
@@ -48,7 +48,7 @@
                         <p class="text-success">@TempData["firstname"]</p>
                         <input class="form-control" type="text" name="firstname" value=@ViewBag.UserLoggedin.firstname>
                         <h5>Last Name:</h5>
-                        <p><span asp-validation-for="lastname"></span></p>
+                        <p class="text-danger"><span asp-validation-for="lastname"></span></p>
                         <p class="text-success">@TempData["lastname"]</p>
                         <input class="form-control" type="text" name="lastname" value=@ViewBag.UserLoggedin.lastname>
                         <br>
@@ -68,8 +68,10 @@
                         <h5>Password: </h5>
                         <p class="text-success">@TempData["PWupdate"]</p>
                         <!-- validation for pw pwconfirm compare -->
+                        <p class="text-danger"><span>@TempData["invalidPW"]</span></p>
                         <input class="form-control" type="password" name="password">
                         <h5>Password Confirmation:</h5>
+                        <p class="text-danger"><span>@TempData["PWmismatch"]</span></p>
                         <input class="form-control" type="password" name="passwordconfirm">
                         <br>
                         <button class="btn btn-success pull-right" type="submit">Update Password</button>
@@ -81,11 +83,11 @@
     </div>
     <div class="row">
         <div class="col">
-            <h5>Edit Description</h5>
+            <h5>Edit Description:  <span class="text-success">@TempData["descUpdate"]</span></h5>
                 <form action="/updatedesc" method="POST">
-                    <textarea class="form-control" name="description" rows="5"></textarea>
+                    <textarea class="form-control" name="description" rows="5">@ViewBag.UserLoggedin.description</textarea>
                     <br>
-                    <button class="btn btn-success pull-right">Save</button>
+                    <button type="submit" class="btn btn-success pull-right">Save</button>
                 </form>
         </div>
     </div>
